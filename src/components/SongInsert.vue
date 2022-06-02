@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import Switch from '../components/Switch.vue';
+import SongOnStack from '../components/SongOnStack.vue';
 const insertValue = ref("");
 const result = ref("");
 const warning = ref("");
@@ -82,6 +83,7 @@ const youtube_parser = (url) => {
       Thêm bài hát
     </div>
     <input
+      autocomplete="off"
       v-model="insertValue"
       class=" ring-2 rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-1/2 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
       name="email"
@@ -91,4 +93,5 @@ const youtube_parser = (url) => {
   <div>{{ result }}</div>
   <div>{{ warning }}</div>
   <Switch />
+  <SongOnStack />
 </template>

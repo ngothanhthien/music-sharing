@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch } from "vue";
+import Switch from '../components/Switch.vue';
 const insertValue = ref("");
 const result = ref("");
 const warning = ref("");
@@ -89,4 +90,5 @@ const youtube_parser = (url) => {
   </div>
   <div>{{ result }}</div>
   <div>{{ warning }}</div>
+  <Switch />
 </template>

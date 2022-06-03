@@ -5,6 +5,8 @@ import SearchIcon from "../components/icons/SearchIcon.vue";
 import TagToggle from "../components/TagToggle.vue";
 import ShareIcon from "../components/icons/ShareIcon.vue";
 import SongInsertArea from "../components/SongInsertArea.vue";
+import LangSetting from "../components/LangSetting.vue";
+import i18n from "../i18n.js";
 const tags = new Map([
   [10, { name: "Sơn Tùng MTP", isActive: false, id: 10 }],
   [5, { name: "Hoàng Thùy Linh", isActive: false, id: 5 }],
@@ -34,6 +36,9 @@ const tagsSearchResult = computed(() => {
 });
 </script>
 <template>
+<div class="fixed right-2 top-0 z-10">
+  <LangSetting />
+</div>
   <div class="grid grid-cols-12 h-screen">
     <!-- side bar -->
     <div
@@ -47,7 +52,9 @@ const tagsSearchResult = computed(() => {
           class="mx-auto object-cover rounded-full border-4 h-24 w-24"
         />
       </a>
-      <div class="text-center mt-2 text-white">Chào Ngô Thanh Thiên!</div>
+      <div class="text-center mt-2 text-white">
+        {{ $t("welcomeMsg") }} Ngô Thanh Thiên!
+      </div>
       <!-- search bar -->
       <div class="relative mx-2">
         <div
@@ -60,7 +67,7 @@ const tagsSearchResult = computed(() => {
           type="search"
           id="default-search"
           class="block p-2 pl-10 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus-visible:outline-none"
-          placeholder="Tìm tag..."
+          :placeholder="$t('find_tag')"
         />
       </div>
       <!-- tags -->
@@ -77,9 +84,9 @@ const tagsSearchResult = computed(() => {
       <!-- share button -->
       <a
         href="#"
-        class="z-50 inline-flex fixed top-4 right-4 py-2 px-4 justify-center items-center bg-red-600 hover:bg-red-700 focus:ring-red-500 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none"
+        class="z-50 inline-flex fixed bottom-4 right-4 py-2 px-4 justify-center items-center bg-red-600 hover:bg-red-700 focus:ring-red-500 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none"
         ><ShareIcon class="w-5 h-5 text-white m-2" />
-        Chia sẻ
+        {{$t('preview')}}
       </a>
       <!-- song input field -->
       <div>

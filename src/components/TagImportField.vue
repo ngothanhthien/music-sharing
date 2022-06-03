@@ -9,7 +9,7 @@ const tagSearch = useDebouncedRef("");
     <TagWithDelete class="m-0.5">Tag2</TagWithDelete>
     <div class="relative">
       <input
-        placeholder="Thêm tag..."
+        :placeholder="$t('add_tag')"
         v-model="tagSearch"
         class="peer focus:outline-none"
         type="text"

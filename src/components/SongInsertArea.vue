@@ -75,14 +75,14 @@ const youtube_parser = (url) => {
 <template>
   <div class="m-2">
     <div class="text-gray-700 my-2">
-      Thêm bài hát
+      {{$t('add_song_title')}}
     </div>
     <input
       autocomplete="off"
       v-model="insertValue"
       class=" ring-2 rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-1/2 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
       name="email"
-      placeholder="Link bài hát hoặc danh sách"
+      :placeholder="$t('add_song_description')"
     />
   </div>
   <div>{{ result }}</div>

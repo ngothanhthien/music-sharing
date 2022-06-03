@@ -4,7 +4,7 @@ import { useDebouncedRef } from "../debouncedRef.js";
 import SearchIcon from "../components/icons/SearchIcon.vue";
 import TagToggle from "../components/TagToggle.vue";
 import ShareIcon from "../components/icons/ShareIcon.vue";
-import SongInsert from "../components/SongInsert.vue";
+import SongInsertArea from "../components/SongInsertArea.vue";
 const tags = new Map([
   [10, { name: "Sơn Tùng MTP", isActive: false, id: 10 }],
   [5, { name: "Hoàng Thùy Linh", isActive: false, id: 5 }],
@@ -83,7 +83,7 @@ const tagsSearchResult = computed(() => {
       </a>
       <!-- song input field -->
       <div>
-        <SongInsert />
+        <SongInsertArea />
       </div>
     </div>
   </div>

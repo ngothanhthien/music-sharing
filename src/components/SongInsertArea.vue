@@ -1,14 +1,14 @@
 <script setup>
 import { ref, watch } from "vue";
-import Switch from '../components/Switch.vue';
-import SongOnStack from '../components/SongOnStack.vue';
+import Switch from './Switch.vue';
+import SongOnStack from './SongOnStack.vue';
 const insertValue = ref("");
 const result = ref("");
 const warning = ref("");
 const api_key = "AIzaSyDXjkesUyo5WWyG8Oo2oLUdcX2B_2nKw7k";
 const youtube_api = "https://youtube.googleapis.com/youtube/v3/";
 const db_api = "http://localhost:3000";
-let stop = false;
+const songsOnStack=ref(new Map());
 watch(insertValue, async (link) => {
   link = link.trim();
   link = youtube_parser(link);
@@ -45,16 +45,11 @@ watch(insertValue, async (link) => {
     } else {
       for (let i = 0; i < insertSongs.length; i++) {
         const insertSong = insertSongs[i]["snippet"];
-        console.log(insertSong.title);
-        fetch(db_api + "/songs", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
+        songsOnStack.value.set(id,{
             title: insertSong.title,
             youtube_id: id,
-            tag: [],
-          }),
-        });
+            tags: [],
+          });
       }
     }
   } else {
@@ -93,5 +88,9 @@ const youtube_parser = (url) => {
   <div>{{ result }}</div>
   <div>{{ warning }}</div>
   <Switch />
-  <SongOnStack />
+  <div>
+    <div v-for="[youtube_id,song] in songsOnStack">
+      <SongOnStack :title="song.title"/>
+    </div>
+  </div>
 </template>

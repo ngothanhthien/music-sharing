@@ -5,7 +5,7 @@ const props = defineProps(["tag"]);
 <template>
   <div
     :class="{ active: tag.isActive, notActive: !tag.isActive }"
-    class="cursor-pointer m-1 px-4 py-2 inline-block text-base rounded-full notActive select-none"
+    class="cursor-pointer m-1 px-4 py-2 inline-block text-base rounded-full select-none border border-skin-default"
     @click="$emit('toggle',tag.id)"
   >
     {{tag.name}}
@@ -13,9 +13,9 @@ const props = defineProps(["tag"]);
 </template>
 <style>
 .notActive {
-  @apply border-[#ffc44a] bg-white border;
+  @apply bg-white;
 }
 .active {
-  @apply bg-[#ffc44a] text-white;
+  @apply bg-skin-fill text-skin-base;
 }
 </style>

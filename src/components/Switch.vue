@@ -21,6 +21,6 @@ input:checked + .toggle-bg:after {
   @apply border-white;
 }
 input:checked + .toggle-bg {
-  @apply bg-[#ee9ca7] border-[#ee9ca7];
+  @apply bg-skin-fill border-skin-default;
 }
 </style>

@@ -17,7 +17,7 @@ const tags = new Map([
   [9, { name: "Kpop", isActive: false, id: 9 }],
 ]);
 const tagsResult = ref(tags);
-const themeNow = ref("default");
+const themeNow = getCookie('theme');
 const tagSearchValue = useDebouncedRef("");
 const tagToggleF = (id) => {
   tagsResult.value.get(id)["isActive"] = !tagsResult.value.get(id)["isActive"];
@@ -36,18 +36,28 @@ const tagsSearchResult = computed(() => {
   });
   return temp;
 });
+//////mixin
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
 </script>
 <template>
   <div :class="{greenTheme:themeNow=='green theme'}">
     <div class="fixed right-2 top-0 z-10 flex">
       <LangSetting />
-      <ThemeSetting
-        @changeTheme="
-          (theme) => {
-            themeNow = theme;
-          }
-        "
-      />
+      <ThemeSetting :themeNow="themeNow==''?'default':themeNow"/>
     </div>
     <div class="grid grid-cols-12 h-screen">
       <!-- side bar -->

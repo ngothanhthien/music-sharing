@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useDebouncedRef } from "../debouncedRef.js";
+import {getCookie,setCookie} from "../logic/cookie.js";
 import SearchIcon from "../components/icons/SearchIcon.vue";
 import TagToggle from "../components/TagToggle.vue";
 import ShareIcon from "../components/icons/ShareIcon.vue";
@@ -17,7 +18,7 @@ const tags = new Map([
   [9, { name: "Kpop", isActive: false, id: 9 }],
 ]);
 const tagsResult = ref(tags);
-const themeNow = getCookie('theme');
+const themeNow = ref(getCookie('theme'));
 const tagSearchValue = useDebouncedRef("");
 const tagToggleF = (id) => {
   tagsResult.value.get(id)["isActive"] = !tagsResult.value.get(id)["isActive"];
@@ -36,28 +37,16 @@ const tagsSearchResult = computed(() => {
   });
   return temp;
 });
-//////mixin
-function getCookie(cname) {
-  let name = cname + "=";
-  let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
-  for(let i = 0; i <ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
+const changeTheme=(newTheme)=>{
+  setCookie('theme',newTheme,365);
+  themeNow.value=newTheme;
 }
 </script>
 <template>
   <div :class="{greenTheme:themeNow=='green theme'}">
     <div class="fixed right-2 top-0 z-10 flex">
       <LangSetting />
-      <ThemeSetting :themeNow="themeNow==''?'default':themeNow"/>
+      <ThemeSetting @changeTheme='changeTheme' :themeNow="themeNow==''?'default':themeNow"/>
     </div>
     <div class="grid grid-cols-12 h-screen">
       <!-- side bar -->

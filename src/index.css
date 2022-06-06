@@ -10,11 +10,11 @@
         --color-fill:#ee9ca7;
         --color-fill-stop:#ffdde1;
     }
-    .greenTheme{
-        --color-text-base: #ffffff;
-        --color-text-muted: #c7d2fe;
-        --color-text-inverted: #4f46e5;
-        --color-fill:#9EB23B;
-        --color-fill-stop:#FCF9C6;
-    }
+}
+.greenTheme{
+    --color-text-base: #ffffff;
+    --color-text-muted: #c7d2fe;
+    --color-text-inverted: #4f46e5;
+    --color-fill:#9EB23B;
+    --color-fill-stop:#FCF9C6;
 }

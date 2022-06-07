@@ -4,7 +4,7 @@ import TagWithDelete from "./TagWithDelete.vue";
 const tagSearch = useDebouncedRef("");
 </script>
 <template>
-  <div class="flex items-center border p-0.5 w-full">
+  <div class="flex items-center p-0.5 w-full">
     <TagWithDelete class="m-0.5">Tag1</TagWithDelete>
     <TagWithDelete class="m-0.5">Tag2</TagWithDelete>
     <div class="relative">
@@ -26,7 +26,7 @@ const tagSearch = useDebouncedRef("");
         >
         <a
             href="#"
-            class="block block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+            class="block block px-4 py-2 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
             role="menuitem"
           >
             <span class="flex flex-col">
@@ -35,7 +35,7 @@ const tagSearch = useDebouncedRef("");
           </a>
           <a
             href="#"
-            class="block block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+            class="block block px-4 py-2 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
             role="menuitem"
           >
             <span class="flex flex-col">
@@ -44,7 +44,7 @@ const tagSearch = useDebouncedRef("");
           </a>
           <a
             href="#"
-            class="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+            class="block block px-4 py-2 text-md hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
             role="menuitem"
           >
             <span class="flex flex-col">
@@ -53,7 +53,7 @@ const tagSearch = useDebouncedRef("");
           </a>
           <a
             href="#"
-            class="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+            class="block block px-4 py-2 text-md hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
             role="menuitem"
           >
             <span class="flex flex-col">

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed,provide } from "vue";
 import { useDebouncedRef } from "../debouncedRef.js";
 import {getCookie,setCookie} from "../logic/cookie.js";
 import SearchIcon from "../components/icons/SearchIcon.vue";
@@ -51,7 +51,7 @@ const changeTheme=(newTheme)=>{
     <div class="grid grid-cols-12 h-screen">
       <!-- side bar -->
       <div
-        class="col-span-3 bg-gradient-to-b from-skin-fillFrom to-skin-fillStop py-10 px-2"
+        class="col-span-3 bg-gradient-to-b from-skin-primary to-skin-primaryStop py-10 px-2"
       >
         <!-- avatar -->
         <a href="#" class="block relative">
@@ -75,7 +75,7 @@ const changeTheme=(newTheme)=>{
             v-model="tagSearchValue"
             type="search"
             id="default-search"
-            class="block p-2 pl-10 w-full text-sm text-gray-900 rounded-lg border border-gray-300 focus-visible:outline-none"
+            class="block p-2 pl-10 w-full text-sm text-skin-base rounded-lg border border-gray-300 focus-visible:outline-none"
             :placeholder="$t('find_tag')"
           />
         </div>
@@ -93,7 +93,7 @@ const changeTheme=(newTheme)=>{
         <!-- share button -->
         <a
           href="#"
-          class="z-50 inline-flex fixed bottom-4 right-4 py-2 px-4 justify-center items-center bg-red-600 hover:bg-red-700 focus:ring-red-500 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none"
+          class="z-50 inline-flex fixed bottom-4 right-4 py-2 px-4 justify-center items-center bg-skin-accent hover:bg-skin-accentDark focus:ring-red-500 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none"
           ><ShareIcon class="w-5 h-5 text-white m-2" />
           {{ $t("preview") }}
         </a>

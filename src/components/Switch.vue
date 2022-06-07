@@ -9,7 +9,6 @@ import {ref} from 'vue';
       class="toggle-bg bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full"
     ></div>
   </label>
-  {{ switchValue}}
 </template>
 <style scoped>
 .toggle-bg:after {
@@ -21,6 +20,6 @@ input:checked + .toggle-bg:after {
   @apply border-white;
 }
 input:checked + .toggle-bg {
-  @apply bg-skin-fill border-skin-default;
+  @apply bg-skin-secondary border-skin-secondary;
 }
 </style>

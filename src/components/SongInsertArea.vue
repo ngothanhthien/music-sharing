@@ -74,23 +74,22 @@ const youtube_parser = (url) => {
 
 <template>
   <div class="m-2">
-    <div class="text-gray-700 my-2">
+    <div class="text-skin-base my-2">
       {{$t('add_song_title')}}
     </div>
     <input
       autocomplete="off"
       v-model="insertValue"
-      class=" ring-2 rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-1/2 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-      name="email"
+      class="ring-2 rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-1/2 py-2 px-4 bg-white shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-skin-accent focus:border-transparent"
       :placeholder="$t('add_song_description')"
     />
   </div>
   <div>{{ result }}</div>
   <div>{{ warning }}</div>
   <Switch />
-  <div>
+  <div class="bg-skin-primaryDark px-3 py-1 w-2/3">
     <div v-for="[youtube_id,song] in songsOnStack">
-      <SongOnStack :title="song.title"/>
+      <SongOnStack :title="song.title" class="p-2 my-2 w-full bg-skin-neutralLight"/>
     </div>
   </div>
 </template>

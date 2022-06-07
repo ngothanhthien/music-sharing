@@ -3,13 +3,13 @@ import XIcon from "./icons/XIcon.vue";
 </script>
 <template>
   <div
-    class="relative bg-[#ffc44a] text-white min-w-max px-4 py-2 rounded-full select-none"
+    class="relative bg-skin-secondary text-skin-reverse min-w-max px-4 py-2 rounded-full select-none"
   >
-    <div class="mr-3"><slot></slot></div>
+    <div class="mr-2"><slot></slot></div>
     <div
-      class="flex absolute inset-y-0 right-2 items-center pl-3 cursor-pointer"
+      class="flex absolute inset-y-0 right-2 items-center pl-2 cursor-pointer"
     >
-      <XIcon class="fill-current w-4 h-4" />
+      <XIcon class="fill-current w-3 h-3" style="-webkit-text-stroke: 2px black;"/>
     </div>
   </div>
 </template>

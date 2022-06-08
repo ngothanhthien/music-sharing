@@ -4,24 +4,30 @@ import { useDebouncedRef } from "../debouncedRef.js";
 import TagWithDelete from "./TagWithDelete.vue";
 const tagSearch = useDebouncedRef("");
 const {tags}=inject('tags');
+const inputField=ref(null);
+const resultVisible=ref(false);
 const addTagToSong=() => {
   console.log(1);
+}
+const turnOffSuggest=() => {
+  resultVisible.value=false;
 }
 </script>
 <template>
   <div class="flex items-center p-0.5 w-full">
     <TagWithDelete class="m-0.5">Tag1</TagWithDelete>
     <TagWithDelete class="m-0.5">Tag2</TagWithDelete>
-    <div class="relative">
+    <div class="relative" ref="inputField" v-clickOutside="turnOffSuggest">
       <input
         :placeholder="$t('add_tag')"
         v-model="tagSearch"
-        class="peer focus:outline-none"
+        class="focus:outline-none"
         type="text"
+        @click="resultVisible=true"
       />
       <!-- dropdown -->
-      <div
-        class="hidden z-50 peer-focus:block overflow-y-scroll origin-top-right absolute mt-2 max-h-40 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5"
+      <div v-if="resultVisible"
+        class="z-50 overflow-y-scroll origin-top-right absolute mt-2 max-h-40 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5"
       >
         <div
           class="py-1"

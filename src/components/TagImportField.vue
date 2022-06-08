@@ -1,44 +1,68 @@
 <script setup>
-import { inject, ref } from "vue";
+import { inject, ref,watch,computed } from "vue";
 import { useDebouncedRef } from "../debouncedRef.js";
 import TagWithDelete from "./TagWithDelete.vue";
-const props= defineProps(['tagsOnSong']);
-const emit=defineEmits(['addTagToSong','removeTagFromSong']);
+const props = defineProps(["tagsOnSong"]);
+const emit = defineEmits(["addTagToSong", "removeTagFromSong"]);
 const tagSearch = useDebouncedRef("");
+watch(tagSearch,(tagName)=>{
+  if(tagName!=""){
+    resultVisible.value=true;
+  }
+})
 const { tags } = inject("tags");
 const inputField = ref(null);
 const resultVisible = ref(false);
+const tagsSuggest=computed(()=>{
+  if(tagSearch.value==""){
+    return tags;
+  }
+  const regex = new RegExp(tagSearch.value, "gi");
+  const temp = new Map();
+  tags.forEach((value, key) => {
+    if (value.name.match(regex)) {
+      temp.set(key, value);
+    }
+  });
+  return temp;
+})
 const turnOffSuggest = () => {
   resultVisible.value = false;
 };
-const addCustomTagToSong=()=>{
-  if(tagSearch.value!=""){
-    emit('addTagToSong', tagSearch.value);
+const addCustomTagToSong = () => {
+  if (tagSearch.value != "") {
+    emit("addTagToSong", tagSearch.value);
     tagSearch.value = "";
     resultVisible.value = false;
   }
-}
-const addTagToSong=(tagName)=>{
-  emit('addTagToSong',tagName);
+};
+const addTagToSong = (tagName) => {
+  emit("addTagToSong", tagName);
   tagSearch.value = "";
+  inputField.value.focus();
   resultVisible.value = false;
-}
-const removeTagFromSong=(tagName)=>{
-  emit('removeTagFromSong',tagName);
-}
+};
+const removeTagFromSong = (tagName) => {
+  emit("removeTagFromSong", tagName);
+};
 </script>
 <template>
   <div class="flex items-center p-0.5 flex-wrap">
-    <div v-for="tagOnSong in tagsOnSong" :key="'tagOnSong'+tagOnSong">
-      <TagWithDelete @removeTagFromSong="removeTagFromSong(tagOnSong)" class="m-0.5">{{tagOnSong}}</TagWithDelete>
+    <div v-for="tagOnSong in tagsOnSong" :key="'tagOnSong' + tagOnSong">
+      <TagWithDelete
+        @removeTagFromSong="removeTagFromSong(tagOnSong)"
+        class="m-0.5"
+        >{{ tagOnSong }}</TagWithDelete
+      >
     </div>
-    <div class="relative" ref="inputField" v-clickOutside="turnOffSuggest">
+    <div class="relative" v-clickOutside="turnOffSuggest">
       <input
         :placeholder="$t('add_tag')"
         v-model="tagSearch"
         class="focus:outline-none"
         type="text"
         @click="resultVisible = true"
+        ref="inputField"
       />
       <!-- dropdown -->
       <div
@@ -55,16 +79,13 @@ const removeTagFromSong=(tagName)=>{
             href="#"
             class="px-4 py-2 hover:bg-skin-secondary hover:text-skin-reverse cursor-pointer select-none"
           >
-            <span
-              class="flex flex-col"
-              @click="addCustomTagToSong"
-            >
+            <span class="flex flex-col" @click="addCustomTagToSong">
               <span> {{ tagSearch == "" ? "&nbsp;" : tagSearch }} </span>
             </span>
           </div>
 
           <div
-            v-for="[id, tag] in tags"
+            v-for="[id, tag] in tagsSuggest"
             :key="id"
             href="#"
             class="px-4 py-2 hover:bg-skin-secondary hover:text-skin-reverse cursor-pointer select-none"

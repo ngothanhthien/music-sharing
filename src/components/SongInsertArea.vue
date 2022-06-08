@@ -1,59 +1,28 @@
 <script setup>
 import { ref, watch } from "vue";
+import {removeElementFromArray,addElementUniqueToArray} from "../logic/array.js";
 import Switch from './Switch.vue';
 import SongOnStack from './SongOnStack.vue';
 const insertValue = ref("");
 const result = ref("");
 const warning = ref("");
-const api_key = "AIzaSyDXjkesUyo5WWyG8Oo2oLUdcX2B_2nKw7k";
-const youtube_api = "https://youtube.googleapis.com/youtube/v3/";
-const db_api = "http://localhost:3000";
+//data from api
+const songsJson=[
+  {"id":"9mxTxTRHNMU","title":"Da Lo Yeu Em Nhieu"},
+  {"id":"2YM4j-oP_qQ","title":"Vu Cat Tuong - Mơ (Dreaming) | Official MV"},
+  {"id":"30KI5SuECuc","title":"Âm Thầm Bên Em | OFFICIAL MUSIC VIDEO | Sơn Tùng M-TP"},
+  {"id":"QdXdx9IaakA","title":"NHỮNG KẺ MỘNG MƠ | Noo Phước Thịnh | OFFICIAL MV"},
+  {"id":"re4VI-EsST8","title":"VẠN DẶM XA NHAU, VẠN LẦN THƯƠNG ĐAU - PHƯỢNG VŨ | OFFICIAL MUSIC VIDEO"}
+];
 const songsOnStack=ref(new Map());
-watch(insertValue, async (link) => {
-  link = link.trim();
-  link = youtube_parser(link);
-  if (link) {
-    result.value = link.id;
-    const id = link.id;
-    let url = null;
-    if (link.type == "song") {
-      url =
-        youtube_api +
-        "videos" +
-        "?part=snippet" +
-        "&id=" +
-        id +
-        "&key=" +
-        api_key;
-    } else if (link.type == "list") {
-      url =
-        youtube_api +
-        "playlistItems?part=snippet&maxResults=50&playlistId=" +
-        id +
-        "&key=" +
-        api_key;
-      warning.value = "Bạn đang thêm 1 danh sách";
-    }
-    let api = await fetch(url);
-    api = await api.json();
-    let insertSongs = api["items"];
-    if (
-      link.type == "list" &&
-      insertSongs[0]["snippet"]["channelTitle"] == "YouTube"
-    ) {
-      warning.value = "Danh sách bạn đưa không hợp lệ";
-    } else {
-      for (let i = 0; i < insertSongs.length; i++) {
-        const insertSong = insertSongs[i]["snippet"];
-        songsOnStack.value.set(id,{
-            title: insertSong.title,
-            youtube_id: id,
-            tags: [],
-          });
-      }
-    }
-  } else {
-    result.value =insertValue.value==''?'':"Link không hợp lệ";
+watch(insertValue,(link) => {
+  console.log(youtube_parser(link));
+  for(let i=0;i<songsJson.length;i++){
+    songsOnStack.value.set(songsJson[i]["id"],{
+      title:songsJson[i]["title"],
+      tags:[],
+      isChecked:true
+    });
   }
 });
 const youtube_parser = (url) => {
@@ -70,12 +39,18 @@ const youtube_parser = (url) => {
   }
   return false;
 };
+const addTagToSong=(song_id,tagName)=>{
+  addElementUniqueToArray(songsOnStack.value.get(song_id).tags,tagName);
+}
+const removeTagFromSong=(song_id,tagName)=>{
+  removeElementFromArray(songsOnStack.value.get(song_id).tags,tagName);
+}
 </script>
 
 <template>
   <div class="m-2">
     <div class="text-skin-base my-2">
-      {{$t('add_song_title')}}
+      {{ $t("add_song_title") }}
     </div>
     <input
       autocomplete="off"
@@ -88,8 +63,15 @@ const youtube_parser = (url) => {
   <div>{{ warning }}</div>
   <div class="bg-skin-primaryDark px-3 py-1 w-2/3">
     <Switch />
-    <div v-for="[youtube_id,song] in songsOnStack">
-      <SongOnStack :title="song.title" class="p-2 my-2 w-full bg-skin-neutralLight"/>
+    <div v-for="[youtube_id, song] in songsOnStack">
+      <SongOnStack
+        @addTagToSong="addTagToSong(youtube_id,$event)"
+        @removeTagFromSong="removeTagFromSong(youtube_id,$event)"
+        :title="song.title"
+        :checked="song.isChecked"
+        :tagsOnSong="song.tags"
+        class="p-2 my-2 w-full bg-skin-neutralLight"
+      />
     </div>
   </div>
 </template>

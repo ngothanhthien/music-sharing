@@ -8,8 +8,9 @@ import XIcon from "./icons/XIcon.vue";
     <div class="mr-2"><slot></slot></div>
     <div
       class="flex absolute inset-y-0 right-2 items-center pl-2 cursor-pointer"
+      @click="$emit('removeTagFromSong')"
     >
-      <XIcon class="fill-current w-3 h-3" style="-webkit-text-stroke: 2px black;"/>
+      <XIcon class="fill-current w-3 h-3"/>
     </div>
   </div>
 </template>

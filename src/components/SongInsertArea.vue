@@ -86,8 +86,8 @@ const youtube_parser = (url) => {
   </div>
   <div>{{ result }}</div>
   <div>{{ warning }}</div>
-  <Switch />
   <div class="bg-skin-primaryDark px-3 py-1 w-2/3">
+    <Switch />
     <div v-for="[youtube_id,song] in songsOnStack">
       <SongOnStack :title="song.title" class="p-2 my-2 w-full bg-skin-neutralLight"/>
     </div>

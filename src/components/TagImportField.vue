@@ -1,7 +1,12 @@
 <script setup>
+import {inject,ref} from 'vue';
 import { useDebouncedRef } from "../debouncedRef.js";
 import TagWithDelete from "./TagWithDelete.vue";
 const tagSearch = useDebouncedRef("");
+const {tags}=inject('tags');
+const addTagToSong=() => {
+  console.log(1);
+}
 </script>
 <template>
   <div class="flex items-center p-0.5 w-full">
@@ -24,69 +29,23 @@ const tagSearch = useDebouncedRef("");
           aria-orientation="vertical"
           aria-labelledby="options-menu"
         >
-        <a
+        <div
             href="#"
-            class="block block px-4 py-2 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-            role="menuitem"
+            class="px-4 py-2 hover:bg-skin-secondary hover:text-skin-reverse cursor-pointer"
           >
             <span class="flex flex-col">
               <span> {{tagSearch==''?'&nbsp;':tagSearch}} </span>
             </span>
-          </a>
-          <a
+          </div>
+
+          <div v-for="[id,tag] in tags" :key="id"
             href="#"
-            class="block block px-4 py-2 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-            role="menuitem"
+            class="px-4 py-2 hover:bg-skin-secondary hover:text-skin-reverse cursor-pointer"
           >
-            <span class="flex flex-col">
-              <span> Stripe </span>
+            <span class="flex flex-col" @click="addTagToSong">
+              <span> {{tag.name}} </span>
             </span>
-          </a>
-          <a
-            href="#"
-            class="block block px-4 py-2 text-md hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-            role="menuitem"
-          >
-            <span class="flex flex-col">
-              <span> Stripe </span>
-            </span>
-          </a>
-          <a
-            href="#"
-            class="block block px-4 py-2 text-md hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-            role="menuitem"
-          >
-            <span class="flex flex-col">
-              <span> Stripe </span>
-            </span>
-          </a>
-          <a
-            href="#"
-            class="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-            role="menuitem"
-          >
-            <span class="flex flex-col">
-              <span> Stripe </span>
-            </span>
-          </a>
-          <a
-            href="#"
-            class="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-            role="menuitem"
-          >
-            <span class="flex flex-col">
-              <span> Mastercard </span>
-            </span>
-          </a>
-          <a
-            href="#"
-            class="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-            role="menuitem"
-          >
-            <span class="flex flex-col">
-              <span> Paypal </span>
-            </span>
-          </a>
+          </div>
         </div>
       </div>
     </div>

@@ -17,6 +17,9 @@ const tags = new Map([
   [7, { name: "Âu Mỹ", isActive: false, id: 7 }],
   [9, { name: "Kpop", isActive: false, id: 9 }],
 ]);
+provide('tags',{
+  tags,
+})
 const tagsResult = ref(tags);
 const themeNow = ref(getCookie('theme'));
 const tagSearchValue = useDebouncedRef("");

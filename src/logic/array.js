@@ -13,3 +13,6 @@ export const addElementUniqueToArray=(array,value)=>{
     }
     return false;
 }
+export const deleteAllElementFromArray=(array)=>{
+    array.splice(0,array.length);
+}

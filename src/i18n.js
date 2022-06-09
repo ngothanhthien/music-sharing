@@ -9,7 +9,8 @@ const messages = {
       find_tag:'Tìm tag...',
       add_tag:'Thêm tag...',
       add_song_title:'Thêm bài hát',
-      add_song_description:'Link bài hát hoặc danh sách...'
+      add_song_description:'Link bài hát hoặc danh sách...',
+      import:'Thêm',
     },
     en: {
         welcomeMsg: 'Hello',
@@ -19,7 +20,8 @@ const messages = {
         find_tag:'Find tag...',
         add_tag:'Add tag...',
         add_song_title:'Add new song',
-        add_song_description:'Link single song or a list...'
+        add_song_description:'Link single song or a list...',
+        import:'Import',
     }
   }
   

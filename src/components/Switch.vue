@@ -1,10 +1,14 @@
 <script setup>
-import {ref} from 'vue';
-    const switchValue=ref(false);
+const props=defineProps(['switchValue']);
 </script>
 <template>
   <label class="flex items-center cursor-pointer relative">
-    <input v-model="switchValue" type="checkbox" class="sr-only" />
+    <input
+      :checked='switchValue'
+      @input="$emit('update:switchValue',$event.target.checked)"
+      type="checkbox"
+      class="sr-only"
+    />
     <div
       class="toggle-bg bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full"
     ></div>

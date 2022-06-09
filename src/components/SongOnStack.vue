@@ -16,10 +16,11 @@ const toggleSongCheck = ()=>{
 <template>
   <div class="border flex items-center">
     <label
-      @click="toggleSongCheck"
-      class="select-none w-1/3 pl-2 truncate"
+      
+      class="select-none w-1/3 pl-2 cursor-pointer truncate"
     >
       <input
+        @click="toggleSongCheck"
         class="mr-1 scale-125 accent-skin-accent"
         type="checkbox"
         :checked="checked"

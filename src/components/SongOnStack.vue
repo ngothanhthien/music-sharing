@@ -1,17 +1,24 @@
 <script setup>
+import { ref, watch } from "vue";
 import TagImportField from "./TagImportField.vue";
 const props = defineProps(["title", "checked", "tagsOnSong"]);
-const emit = defineEmits(["addTagToSong", "removeTagFromSong"]);
+const emit = defineEmits(["addTagToSong", "removeTagFromSong","toggleSongCheck"]);
 const addTagToSong = (name) => {
   emit("addTagToSong", name);
 };
 const removeTagFromSong = (name) => {
   emit("removeTagFromSong", name);
 };
+const toggleSongCheck = ()=>{
+  emit("toggleSongCheck")
+}
 </script>
 <template>
   <div class="border flex items-center">
-    <label class="select-none w-1/3 pl-2 truncate">
+    <label
+      @click="toggleSongCheck"
+      class="select-none w-1/3 pl-2 truncate"
+    >
       <input
         class="mr-1 scale-125 accent-skin-accent"
         type="checkbox"

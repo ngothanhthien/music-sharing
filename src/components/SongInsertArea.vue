@@ -45,6 +45,11 @@ const addTagToSong=(song_id,tagName)=>{
 const removeTagFromSong=(song_id,tagName)=>{
   removeElementFromArray(songsOnStack.value.get(song_id).tags,tagName);
 }
+const toggleSongCheck=(song_id)=>{
+  // songsOnStack.value.get(song_id).isChecked=!songsOnStack.value.get(song_id).isChecked;
+  // console.log(songsOnStack.value);
+  console.log(song_id);
+}
 </script>
 
 <template>
@@ -67,6 +72,7 @@ const removeTagFromSong=(song_id,tagName)=>{
       <SongOnStack
         @addTagToSong="addTagToSong(youtube_id,$event)"
         @removeTagFromSong="removeTagFromSong(youtube_id,$event)"
+        @toggleSongCheck="toggleSongCheck(youtube_id)"
         :title="song.title"
         :checked="song.isChecked"
         :tagsOnSong="song.tags"

@@ -7,6 +7,10 @@ const router = createRouter({
       path: "/me",
       name: "UserHome",
       component: UserHome,
+      children: [
+        {path:'/me',component:()=>import('../views/SongInsert.vue')},
+        {path:'/me/edit',component:()=>import('../views/SongEdit.vue')},
+      ],
     },
   ],
 });

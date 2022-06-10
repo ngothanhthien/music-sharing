@@ -1,12 +1,13 @@
 <script setup>
-import { ref, watch,computed, reactive } from "vue";
+import { ref, watch, reactive } from "vue";
 import {
   removeElementFromArray,
   addElementUniqueToArray,
-  deleteAllElementFromArray
+  deleteAllElementFromArray,
 } from "../logic/array.js";
-import Switch from "./Switch.vue";
-import SongOnStack from "./SongOnStack.vue";
+import Switch from "../components/Switch.vue";
+import SongOnStack from "../components/SongOnStack.vue";
+const props= defineProps(["tagsOnFilter"]);
 const insertValue = ref("");
 const result = ref("");
 const warning = ref("");
@@ -29,28 +30,30 @@ const songsJson = [
   },
 ];
 const songsOnStack = ref(new Map());
-const switchData=reactive({
+const switchData = reactive({
   state: true,
-  songsUnchecked: []
-})
-watch(switchData.songsUnchecked,(array)=>{
-  switchData.state=array.length===0?true:false;
-})
-watch(()=>switchData.state,(state)=>{
-  console.log(1);
-  if(!state&&switchData.songsUnchecked.length===0){
-    songsOnStack.value.forEach((song,song_id)=>{
-      song.isChecked=false;
-      switchData.songsUnchecked.push(song_id);
-    })
+  songsUnchecked: [],
+});
+watch(switchData.songsUnchecked, (array) => {
+  switchData.state = array.length === 0 ? true : false;
+});
+watch(
+  () => switchData.state,
+  (state) => {
+    if (!state && switchData.songsUnchecked.length === 0) {
+      songsOnStack.value.forEach((song, song_id) => {
+        song.isChecked = false;
+        switchData.songsUnchecked.push(song_id);
+      });
+    }
+    if (state && switchData.songsUnchecked.length !== 0) {
+      switchData.songsUnchecked.forEach((song_id) => {
+        songsOnStack.value.get(song_id).isChecked = true;
+      });
+      deleteAllElementFromArray(switchData.songsUnchecked);
+    }
   }
-  if(state&&switchData.songsUnchecked.length!==0){
-    switchData.songsUnchecked.forEach((song_id)=>{
-      songsOnStack.value.get(song_id).isChecked=true;
-    })
-    deleteAllElementFromArray(switchData.songsUnchecked);
-  }
-})
+);
 watch(insertValue, (link) => {
   console.log(youtube_parser(link));
   for (let i = 0; i < songsJson.length; i++) {
@@ -84,28 +87,27 @@ const removeTagFromSong = (song_id, tagName) => {
 const toggleSongCheck = (song_id) => {
   songsOnStack.value.get(song_id).isChecked =
     !songsOnStack.value.get(song_id).isChecked;
-  if(!songsOnStack.value.get(song_id).isChecked){
+  if (!songsOnStack.value.get(song_id).isChecked) {
     switchData.songsUnchecked.push(song_id);
-  }else{
-    removeElementFromArray(switchData.songsUnchecked,song_id);
+  } else {
+    removeElementFromArray(switchData.songsUnchecked, song_id);
   }
-  console.log(switchData.songsUnchecked);
 };
-const importSongs=()=>{
-  const temp=[];
-  songsOnStack.value.forEach((song, song_id)=>{
-    if(song.isChecked){
-      const tempSong={
-        "youtube_id": song_id,
-        "title":song.title,
-        "tags":song.tags
-      }
-    temp.push(tempSong);
+const importSongs = () => {
+  const temp = [];
+  songsOnStack.value.forEach((song, song_id) => {
+    if (song.isChecked) {
+      const tempSong = {
+        youtube_id: song_id,
+        title: song.title,
+        tags: song.tags,
+      };
+      temp.push(tempSong);
     }
-  })
+  });
   console.log(temp);
-  songsOnStack.value=new Map();
-}
+  songsOnStack.value = new Map();
+};
 </script>
 
 <template>
@@ -120,8 +122,11 @@ const importSongs=()=>{
   <div>{{ result }}</div>
   <div>{{ warning }}</div>
   <!-- song stack -->
-  <div v-if="songsOnStack.size!=0" class="bg-skin-primaryDark px-3 py-2 w-2/3 rounded-md">
-    <Switch v-model:switchValue="switchData.state"/>
+  <div
+    v-if="songsOnStack.size != 0"
+    class="bg-skin-primaryDark px-3 py-2 w-2/3 rounded-md"
+  >
+    <Switch v-model:switchValue="switchData.state" />
     <div v-for="[youtube_id, song] in songsOnStack">
       <SongOnStack
         @addTagToSong="addTagToSong(youtube_id, $event)"

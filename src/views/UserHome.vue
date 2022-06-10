@@ -2,11 +2,11 @@
 import { ref, computed, provide } from "vue";
 import { useDebouncedRef } from "../debouncedRef.js";
 import { getCookie, setCookie } from "../logic/cookie.js";
+import {removeElementFromArray} from "../logic/array"
 import SearchIcon from "../components/icons/SearchIcon.vue";
-import ShareIcon from "../components/icons/ShareIcon.vue";
+import ShareButton from "../components/ShareButton.vue";
 import Tabs from "../components/Tabs.vue";
 import TagToggle from "../components/TagToggle.vue";
-import SongInsertArea from "../components/SongInsertArea.vue";
 import LangSetting from "../components/LangSetting.vue";
 import ThemeSetting from "../components/ThemeSetting.vue";
 import i18n from "../i18n.js";
@@ -21,11 +21,18 @@ const tags = new Map([
 provide("tags", {
   tags,
 });
+const emit= defineEmits(["removeTagFromFilter"]);
 const tagsResult = ref(tags);
 const themeNow = ref(getCookie("theme"));
 const tagSearchValue = useDebouncedRef("");
+const tagsOnFilter=ref([]);
 const tagToggleF = (id) => {
   tagsResult.value.get(id)["isActive"] = !tagsResult.value.get(id)["isActive"];
+  if(tagsResult.value.get(id)["isActive"]){
+    tagsOnFilter.value.push(tagsResult.value.get(id)["name"]);
+  }else{
+    removeElementFromArray(tagsOnFilter.value,tagsResult.value.get(id)["name"]);
+  }
   tagSearchValue.value = "";
 };
 const tagsSearchResult = computed(() => {
@@ -45,6 +52,9 @@ const changeTheme = (newTheme) => {
   setCookie("theme", newTheme, 365);
   themeNow.value = newTheme;
 };
+const removeTagFromFilter=(name)=>{
+  console.log(name);
+}
 </script>
 <template>
   <div :class="{ greenTheme: themeNow == 'green theme' }">
@@ -61,13 +71,13 @@ const changeTheme = (newTheme) => {
         class="col-span-3 bg-gradient-to-b from-skin-primary to-skin-primaryStop py-10 px-2"
       >
         <!-- avatar -->
-        <a href="#" class="block relative">
+        <div href="#" class="block relative">
           <img
             alt="Ảnh đại diện"
             src="../assets/img/avatar.jpg"
             class="mx-auto object-cover rounded-full border-4 h-24 w-24"
           />
-        </a>
+        </div>
         <div class="text-center mt-2 text-skin-base">
           {{ $t("welcomeMsg") }} Ngô Thanh Thiên!
         </div>
@@ -98,17 +108,11 @@ const changeTheme = (newTheme) => {
       </div>
       <!--  -->
       <div class="col-span-9 relative ml-5">
-        <!-- share button -->
-        <a
-          href="#"
-          class="z-50 inline-flex fixed bottom-4 right-4 py-2 px-4 justify-center items-center bg-skin-accent hover:bg-skin-accentDark focus:ring-red-500 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none"
-          ><ShareIcon class="w-5 h-5 text-white m-2" />
-          {{ $t("preview") }}
-        </a>
+        <ShareButton />
         <!-- content -->
         <div>
-          <Tabs />
-          <SongInsertArea />
+          <Tabs class="mb-2 inline-block" />
+          <router-view :tagsOnFilter="tagsOnFilter" @removeTagFromFilter="removeTagFromFilter" />
         </div>
       </div>
     </div>

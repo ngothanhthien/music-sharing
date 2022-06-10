@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive, defineEmits } from "vue";
 import SongOnStore from "../components/SongOnStore.vue";
 import TagWithDelete from "../components/TagWithDelete.vue"
 const songsJson = [
@@ -41,10 +41,15 @@ const saveSongs = () => {
 };
 const removeTagFromSong = (song_id, name) => {
   console.log("Remove tag " + name + " from song-" + song_id);
+  song_id.tags.splice(song_id.tags.indexOf(name), 1);
 };
 const addTagToSong = (song_id, name) => {
   console.log("Add tag " + name + " to song-" + song_id);
+  song_id.tags.push(name)
 };
+const emit = defineEmits([
+  "removeTagFromFilter"
+]);
 onMounted(() => {
   songsJson.forEach((song) => {
     songsOnStore.value.set(song.id, {
@@ -65,8 +70,8 @@ onMounted(() => {
   <div class="bg-skin-primaryDark px-3 py-2 w-2/3 rounded-md">
     <div v-for="[song_id, song] in songsOnStore" :key="song_id">
       <SongOnStore
-        @removeTagFromSong="removeTagFromSong(song_id, $event)"
-        @addTagToSong="addTagToSong(song_id, $event)"
+        @removeTagFromSong="removeTagFromSong(song, $event)"
+        @addTagToSong="addTagToSong(song, $event)"
         :title="song.title"
         :tagsOnSong="song.tags"
       />

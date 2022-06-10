@@ -9,6 +9,7 @@ const messages = {
       find_tag:'Tìm tag...',
       add_tag:'Thêm tag...',
       add_song_title:'Thêm bài hát',
+      edit_song_title:'Chỉnh sửa bài hát',
       add_song_description:'Link bài hát hoặc danh sách...',
       import:'Thêm',
     },
@@ -20,6 +21,7 @@ const messages = {
         find_tag:'Find tag...',
         add_tag:'Add tag...',
         add_song_title:'Add new song',
+        edit_song_title:'Edit song',
         add_song_description:'Link single song or a list...',
         import:'Import',
     }

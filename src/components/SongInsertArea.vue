@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch,computed } from "vue";
+import { ref, watch,computed, reactive } from "vue";
 import {
   removeElementFromArray,
   addElementUniqueToArray,
@@ -29,23 +29,26 @@ const songsJson = [
   },
 ];
 const songsOnStack = ref(new Map());
-const switchValue=ref(true);
-const songsUnchecked=ref([]);
-watch(songsUnchecked.value,(array)=>{
-  switchValue.value=array.length===0?true:false;
+const switchData=reactive({
+  state: true,
+  songsUnchecked: []
 })
-watch(switchValue,(value)=>{
-  if(!value&&songsUnchecked.value.length===0){
+watch(switchData.songsUnchecked,(array)=>{
+  switchData.state=array.length===0?true:false;
+})
+watch(()=>switchData.state,(state)=>{
+  console.log(1);
+  if(!state&&switchData.songsUnchecked.length===0){
     songsOnStack.value.forEach((song,song_id)=>{
       song.isChecked=false;
-      songsUnchecked.value.push(song_id);
+      switchData.songsUnchecked.push(song_id);
     })
   }
-  if(value&&songsUnchecked.value.length!==0){
-    songsUnchecked.value.forEach((song_id)=>{
+  if(state&&switchData.songsUnchecked.length!==0){
+    switchData.songsUnchecked.forEach((song_id)=>{
       songsOnStack.value.get(song_id).isChecked=true;
     })
-    deleteAllElementFromArray(songsUnchecked.value);
+    deleteAllElementFromArray(switchData.songsUnchecked);
   }
 })
 watch(insertValue, (link) => {
@@ -82,11 +85,11 @@ const toggleSongCheck = (song_id) => {
   songsOnStack.value.get(song_id).isChecked =
     !songsOnStack.value.get(song_id).isChecked;
   if(!songsOnStack.value.get(song_id).isChecked){
-    songsUnchecked.value.push(song_id);
+    switchData.songsUnchecked.push(song_id);
   }else{
-    removeElementFromArray(songsUnchecked.value,song_id);
+    removeElementFromArray(switchData.songsUnchecked,song_id);
   }
-  console.log(songsUnchecked.value);
+  console.log(switchData.songsUnchecked);
 };
 const importSongs=()=>{
   const temp=[];
@@ -107,9 +110,6 @@ const importSongs=()=>{
 
 <template>
   <div class="m-2">
-    <div class="text-skin-base my-2">
-      {{ $t("add_song_title") }}
-    </div>
     <input
       autocomplete="off"
       v-model="insertValue"
@@ -121,7 +121,7 @@ const importSongs=()=>{
   <div>{{ warning }}</div>
   <!-- song stack -->
   <div v-if="songsOnStack.size!=0" class="bg-skin-primaryDark px-3 py-2 w-2/3 rounded-md">
-    <Switch v-model:switchValue="switchValue"/>
+    <Switch v-model:switchValue="switchData.state"/>
     <div v-for="[youtube_id, song] in songsOnStack">
       <SongOnStack
         @addTagToSong="addTagToSong(youtube_id, $event)"

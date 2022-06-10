@@ -10,6 +10,7 @@ module.exports = {
         skin:{
           'base': 'var(--color-text-base)',
           'reverse':'var(--color-text-reverse)',
+          'accent':'var(--color-accent)',
         }
       },
       backgroundColor:{

@@ -11,7 +11,7 @@ const props = defineProps(["tag"]);
     {{tag.name}}
   </div>
 </template>
-<style>
+<style scoped>
 .notActive {
   @apply bg-white;
 }

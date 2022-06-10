@@ -1,10 +1,11 @@
 <script setup>
-import { ref, computed,provide } from "vue";
+import { ref, computed, provide } from "vue";
 import { useDebouncedRef } from "../debouncedRef.js";
-import {getCookie,setCookie} from "../logic/cookie.js";
+import { getCookie, setCookie } from "../logic/cookie.js";
 import SearchIcon from "../components/icons/SearchIcon.vue";
-import TagToggle from "../components/TagToggle.vue";
 import ShareIcon from "../components/icons/ShareIcon.vue";
+import Tabs from "../components/Tabs.vue";
+import TagToggle from "../components/TagToggle.vue";
 import SongInsertArea from "../components/SongInsertArea.vue";
 import LangSetting from "../components/LangSetting.vue";
 import ThemeSetting from "../components/ThemeSetting.vue";
@@ -17,11 +18,11 @@ const tags = new Map([
   [7, { name: "Âu Mỹ", isActive: false, id: 7 }],
   [9, { name: "Kpop", isActive: false, id: 9 }],
 ]);
-provide('tags',{
+provide("tags", {
   tags,
-})
+});
 const tagsResult = ref(tags);
-const themeNow = ref(getCookie('theme'));
+const themeNow = ref(getCookie("theme"));
 const tagSearchValue = useDebouncedRef("");
 const tagToggleF = (id) => {
   tagsResult.value.get(id)["isActive"] = !tagsResult.value.get(id)["isActive"];
@@ -40,16 +41,19 @@ const tagsSearchResult = computed(() => {
   });
   return temp;
 });
-const changeTheme=(newTheme)=>{
-  setCookie('theme',newTheme,365);
-  themeNow.value=newTheme;
-}
+const changeTheme = (newTheme) => {
+  setCookie("theme", newTheme, 365);
+  themeNow.value = newTheme;
+};
 </script>
 <template>
-  <div :class="{greenTheme:themeNow=='green theme'}">
+  <div :class="{ greenTheme: themeNow == 'green theme' }">
     <div class="fixed right-2 top-0 z-10 flex">
       <LangSetting />
-      <ThemeSetting @changeTheme='changeTheme' :themeNow="themeNow==''?'default':themeNow"/>
+      <ThemeSetting
+        @changeTheme="changeTheme"
+        :themeNow="themeNow == '' ? 'default' : themeNow"
+      />
     </div>
     <div class="grid grid-cols-12 h-screen">
       <!-- side bar -->
@@ -92,6 +96,7 @@ const changeTheme=(newTheme)=>{
           />
         </div>
       </div>
+      <!--  -->
       <div class="col-span-9 relative ml-5">
         <!-- share button -->
         <a
@@ -100,8 +105,9 @@ const changeTheme=(newTheme)=>{
           ><ShareIcon class="w-5 h-5 text-white m-2" />
           {{ $t("preview") }}
         </a>
-        <!-- song input field -->
+        <!-- content -->
         <div>
+          <Tabs />
           <SongInsertArea />
         </div>
       </div>

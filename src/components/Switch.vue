@@ -2,7 +2,7 @@
 const props=defineProps(['switchValue']);
 </script>
 <template>
-  <label class="flex items-center cursor-pointer relative">
+  <label class="inline-flex items-center cursor-pointer relative">
     <input
       :checked='switchValue'
       @input="$emit('update:switchValue',$event.target.checked)"

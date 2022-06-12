@@ -135,13 +135,13 @@ const importSongs = () => {
         :title="song.title"
         :checked="song.isChecked"
         :tagsOnSong="song.tags"
-        class="p-2 my-2 w-full bg-skin-neutralLight"
+        class="px-2 w-full bg-skin-neutralLight hover:bg-skin-neutral"
       />
     </div>
     <div class="flex justify-end">
       <div
         href="#"
-        class="cursor-pointer rounded inline-block py-2 px-4 bg-skin-accent hover:bg-skin-accentDark text-white transition duration-200 text-center text-base font-semibold shadow-md focus:outline-none"
+        class="cursor-pointer rounded inline-block py-2 mt-2 px-4 bg-skin-accent hover:bg-skin-accentDark text-white transition duration-200 text-center text-base font-semibold shadow-md focus:outline-none"
         @click="importSongs"
       >
         {{ $t("import") }}

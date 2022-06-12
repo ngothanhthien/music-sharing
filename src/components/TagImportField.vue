@@ -56,10 +56,11 @@ const removeTagFromSong = (tagName) => {
       >
     </div>
     <div class="relative" v-clickOutside="turnOffSuggest">
+      <!-- input field -->
       <input
         :placeholder="$t('add_tag')"
         v-model="tagSearch"
-        class="focus:outline-none"
+        class="focus:outline-none max-w-fit bg-inherit"
         type="text"
         @click="resultVisible = true"
         ref="inputField"
@@ -67,7 +68,7 @@ const removeTagFromSong = (tagName) => {
       <!-- dropdown -->
       <div
         v-if="resultVisible"
-        class="z-50 overflow-y-scroll origin-top-right absolute mt-2 max-h-40 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5"
+        class="z-50 overflow-y-scroll origin-top-right absolute mt-2 max-h-40 max-w-fit rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5"
       >
         <div
           class="py-1"
